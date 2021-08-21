@@ -1,10 +1,10 @@
-### TRAICE ML
+# TRAICE ML
 
-#Step 1: Download the traice.sql data model file from sync repository.
+## Step 1: Download the traice.sql data model file from sync repository.
 
-#step 2: Clone this repository and run the following command in the terminal: python traice_batch.py {database_username} {database_password}
+## step 2: Clone this repository and run the following command in the terminal: python traice_batch.py {database_username} {database_password}
 
-#step3: The trace_batch.py process takes a long time to run. To allow quicker re-runs, it has been divided into ten steps. For details on each step, consult traice_batch.py or the underlying modules in the traice package:
+## step3: The trace_batch.py process takes a long time to run. To allow quicker re-runs, it has been divided into ten steps. For details on each step, consult traice_batch.py or the underlying modules in the traice package:
 
 Load
 Merge
