@@ -56,6 +56,7 @@ requests-oauthlib==1.3.0
 retrying==1.3.3
 rope==0.17.0
 Rtree==0.9.4
+PyMySQL
 ruamel-yaml==0.15.87
 scikit-image==0.16.2
 scikit-learn @ file:///opt/concourse/worker/volumes/live/47a3ec7c-70dc-43c0-7317-def24a8afaf5/volume/scikit-learn_1592503037057/work
