@@ -1,4 +1,4 @@
-## TRAICE ML
+### TRAICE ML
 
 #Step 1: Download the traice.sql data model file from sync repository.
 
