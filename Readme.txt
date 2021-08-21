@@ -2,7 +2,20 @@
 
 ## Step 1: Download the traice.sql data model file from sync repository.
 
-## step 2: Clone this repository and rund the following command in the current directory terminal: pip3 install -r requirements.txt
+## step 2: Clone this repository and rund the following command in the current directory terminal:
+  For Windows users:
+  
+  pip3 install -r requirements.txt
+  
+  For Mac/Linux-Users:
+  
+  mariadb package might cause an issue while installing: 
+  Hence run the folowing command first:
+  sudo apt-get update -y
+  sudo apt-get install -y libmariadb-dev
+
+  and then run
+  pip3 install -r requirements.txt
 
 ## step 3: Run command in the terminal: python traice_batch.py {database_username} {database_password}n the following
 
