@@ -38,7 +38,7 @@ class Aml(batchstep.BatchStep):
         result = search.fit(self.X_train, self.y_train)#training the model
         # get the best performing model fit on the whole training set
         best_model = result.best_estimator_
-        pickle.dump(best_model, open('./../traice_moneylaundering/'+str(model)+'_best_model.pkl', 'wb'))
+        pickle.dump(best_model, open('../traice_moneylaundering/'+str(model)+'_best_model.pkl', 'wb'))
         print('training score',best_model.score(self.X_train,self.y_train))
         print('prediction score - ',best_model.score(self.X_test,self.y_test))
         score.append(best_model.score(self.X_test,self.y_test))
@@ -82,7 +82,7 @@ class Aml(batchstep.BatchStep):
         
         sc = StandardScaler()
         self.X_train = sc.fit_transform(self.X_train)
-        pickle.dump(sc, open('./../traice_moneylaundering/'+'scaler.pkl', 'wb'))
+        pickle.dump(sc, open('../traice_moneylaundering/'+'scaler.pkl', 'wb'))
         #X_val = sc.transform(X_val)
         self.X_test = sc.transform(self.X_test)
         #print(counts)
