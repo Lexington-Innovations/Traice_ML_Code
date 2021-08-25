@@ -79,7 +79,7 @@ class HitListExp(batchstep.BatchStep):
         # calculate annual gross revenues
         self.revs_annual = self.gross_revs.groupby('FLATTEN_NAME')['REV_CURMONTH'].sum().reset_index()
         self.revs_annual.columns = ['IA Name','REV_ANNUAL']
-        print('self.revs_annual',self.gross_revs)
+        #print('self.revs_annual',self.gross_revs)
         # take original hit list and add in branch number and name
         self.hit_list_expanded = pd.merge(left=self.hit_list,right=self.acct_trades.drop_duplicates('IA Name')[['IA Name','RR_BRANCH_NUM','WM_PHY_BRANCH_NAME']],left_on='IA Name',right_on='IA Name')
         
@@ -91,7 +91,7 @@ class HitListExp(batchstep.BatchStep):
         self.ia_region_bridge['FLATTEN_NAME']=self.ia_region_bridge['FLATTEN_NAME'].apply(lambda x:x.strip())
         self.hit_list_expanded = pd.merge(left=self.hit_list_expanded,right=self.ia_region_bridge,left_on='IA Name',right_on='FLATTEN_NAME')
         
-        print('hit your list mergeee',self.hit_list_expanded['IA Name'])
+        #print('hit your list mergeee',self.hit_list_expanded['IA Name'])
         # add gross revenues
         self.revs_annual['IA Name']=self.revs_annual['IA Name'].apply(lambda x:x.strip())
         self.hit_list_expanded = pd.merge(left=self.hit_list_expanded,right=self.revs_annual,on='IA Name',how='inner')
@@ -122,8 +122,8 @@ class HitListExp(batchstep.BatchStep):
         self.region_ia_counts['REGION']=self.region_ia_counts['REGION'].apply(lambda x:x.strip())
         self.hit_list_expanded = pd.merge(self.hit_list_expanded,self.region_ia_counts,on='REGION',how='inner')
 
-        print('done',self.hit_list_expanded)
-        print('self.gross',self.gross_revs)
+        #print('done',self.hit_list_expanded)
+        #print('self.gross',self.gross_revs)
         # get LOS
         self.gross_revs['LOS(yrs)'] = self.gross_revs['LOS'].apply(self.los_transform)
         self.gross_revs['FLATTEN_NAME']=self.gross_revs['FLATTEN_NAME'].apply(lambda x:x.strip())
@@ -166,7 +166,7 @@ class HitListExp(batchstep.BatchStep):
 
         self.hit_list_expanded_out.to_sql('hit_list_expanded_out', con = engine, if_exists = 'replace',index = False, chunksize = 1000)
 
-        print('finaldone',self.hit_list_expanded)
+        #print('finaldone',self.hit_list_expanded)
         pickle.dump(self.hit_list_out, open(self.pickled_dir + '/hit_list_out.pkl', 'wb'))
         pickle.dump(self.hit_list_expanded, open(self.pickled_dir + '/hit_list_expanded.pkl', 'wb'))
         pickle.dump(self.hit_list_expanded_out, open(self.pickled_dir + '/hit_list_expanded_out.pkl', 'wb'))
