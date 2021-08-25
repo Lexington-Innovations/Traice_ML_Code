@@ -42,7 +42,7 @@ class Merge(batchstep.BatchStep):
             lambda x: x[:x.index('/') + 1]+x[x.rfind('/')+1:])
 
         
-        print(self.acct_trades['TRD_MONTH'])
+        #print(self.acct_trades['TRD_MONTH'])
     # Convert the categorical trade surveillance indicators into one column for each,
     # to make the data suitable for training in a model.
     def convert_categorical(self):
@@ -52,8 +52,8 @@ class Merge(batchstep.BatchStep):
             'TRD_MONTH', 'TRADE_INDICATOR_ID_DESC', 
             'WM_PHYSICAL_BRANCH_ID', 'WM_PHY_BRANCH_REGION','IDENTIFIER_TYPE','ORDER_TYPE','SETTLEMENT_CURRENCY']
         
-        print(self.acct_trades.columns)
-        print(self.trd_ind.columns)
+        #print(self.acct_trades.columns)
+        #print(self.trd_ind.columns)
         df_all_flags_merge = pd.merge(
             left=self.acct_trades, right=self.trd_ind, on='TRD_TRADE_ID', how='left')[keep_cols]
               
@@ -61,7 +61,7 @@ class Merge(batchstep.BatchStep):
         # convert flags/categories to one flag per column
         dummies = pd.get_dummies(df_all_flags_merge['TRADE_INDICATOR_ID_DESC'])
         self.dummy_cols = dummies.columns
-        print('dummmiiiiiiies',dummies)
+        #print('dummmiiiiiiies',dummies)
         # merge table and broken out flag columns
         df_all_flags_dummies_merge = pd.merge(
             df_all_flags_merge, dummies, left_index=True, right_index=True, how='left')
@@ -70,7 +70,7 @@ class Merge(batchstep.BatchStep):
         #keep_cols = ['TRD_TRADE_ID', 'IA_NAME', 'TRD_MONTH', 'WM_PHYSICAL_BRANCH_ID']
         keep_cols = ['TRD_TRADE_ID', 'IA_NAME', 'TRD_MONTH', 'WM_PHYSICAL_BRANCH_ID', 'WM_PHY_BRANCH_REGION','IDENTIFIER_TYPE','ORDER_TYPE','SETTLEMENT_CURRENCY']
         self.flagged_extended = df_all_flags_dummies_merge.groupby(keep_cols)[self.dummy_cols].sum().reset_index()
-        print('flagged_extended',self.flagged_extended)
+        #print('flagged_extended',self.flagged_extended)
 
     def store_indicator_info(self):
 
@@ -105,7 +105,7 @@ class Merge(batchstep.BatchStep):
         # create a dictionary of indicator values and descriptions
         self.store_indicator_info()
         
-        print('doooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooont',self.acct_trades.columns)                
+        #print('doooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooont',self.acct_trades.columns)                
         pickle.dump(self.acct_trades, open(self.pickled_dir + '/acct_trades.pkl', 'wb'))
         pickle.dump(self.flagged_extended, open(self.pickled_dir + '/flagged_extended.pkl', 'wb'))
         pickle.dump(self.dummy_cols, open(self.pickled_dir + '/dummy_cols.pkl', 'wb'))
