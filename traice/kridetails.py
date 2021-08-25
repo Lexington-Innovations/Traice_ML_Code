@@ -36,7 +36,7 @@ class KRIDetails(batchstep.BatchStep):
     ## KRI details
     # TODO Make sure GUI KRI Naming.xlsx is included in inputs
     def run_step(self):
-        print('BEGIN')
+        #print('BEGIN')
         self.df_ia_agg = pickle.load(open(self.pickled_dir + '/df_ia_agg.pkl', 'rb'))
         self.df_ia_agg_scored = pickle.load(open(self.pickled_dir + '/df_ia_agg_scored.pkl', 'rb'))
         self.hit_list_expanded = pickle.load(open(self.pickled_dir + '/hit_list_expanded.pkl', 'rb'))
@@ -49,7 +49,7 @@ class KRIDetails(batchstep.BatchStep):
 
         # create dictionary of feature names to features names to be used in GUI
         # DBG
-        print('BEGIN')
+        #print('BEGIN')
         gui_kri_naming_path = None
         for f in self.input_files:
             if f.endswith('GUI KRI Naming.xlsx'):
@@ -60,11 +60,11 @@ class KRIDetails(batchstep.BatchStep):
         #gui_kri_names = pd.read_excel(f'GUI KRI Naming.xlsx')
         pickled_dir = './csvfiles/pickled/batch'
         gui_kri_names=pickle.load(open(pickled_dir + '/gui_kri_naming.pkl', 'rb'))
-        print('df is',gui_kri_names)
+        #print('df is',gui_kri_names)
         gui_kri_names.index = gui_kri_names['Features']
         del gui_kri_names['Features']
         gui_name_dict = gui_kri_names.to_dict()['Name_for_GUI']
-        print('the infamous dictionary',gui_name_dict)
+        #print('the infamous dictionary',gui_name_dict)
 
         # get list of all used KRIs and count
         all_feats = []
@@ -76,15 +76,15 @@ class KRIDetails(batchstep.BatchStep):
                     if el not in all_feats:
                         all_feats.append(el)
 
-        print('kri allfeats is ',all_feats)
+        #print('kri allfeats is ',all_feats)
         # create dataframe for KRIs
         self.kri_details = pd.DataFrame(index=list(range(len(all_feats))))
         self.kri_details['KRI ID'] = self.kri_details.index
         self.kri_details['KRI Description'] = all_feats
         
         self.kri_details['KRI Description'] = self.kri_details['KRI Description'].map(gui_name_dict)
-        print('after mapping',self.kri_details)
-        print('dictionary is ',gui_name_dict)
+        #print('after mapping',self.kri_details)
+        #print('dictionary is ',gui_name_dict)
         
         # export kri details
         #self.kri_details.to_excel(f'kri_details_{this_run_id}.xlsx',index=False)
