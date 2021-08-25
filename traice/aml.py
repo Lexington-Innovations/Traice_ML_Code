@@ -39,13 +39,13 @@ class Aml(batchstep.BatchStep):
         # get the best performing model fit on the whole training set
         best_model = result.best_estimator_
         pickle.dump(best_model, open('../traice_moneylaundering/'+str(model)+'_best_model.pkl', 'wb'))
-        print('training score',best_model.score(self.X_train,self.y_train))
-        print('prediction score - ',best_model.score(self.X_test,self.y_test))
+        #print('training score',best_model.score(self.X_train,self.y_train))
+        #print('prediction score - ',best_model.score(self.X_test,self.y_test))
         score.append(best_model.score(self.X_test,self.y_test))
         Y_rfc_pred = best_model.predict(self.X_test)
-        print(Y_rfc_pred)
-        print(classification_report(self.y_test,Y_rfc_pred))
-        print(confusion_matrix(self.y_test,Y_rfc_pred))
+        #print(Y_rfc_pred)
+        #print(classification_report(self.y_test,Y_rfc_pred))
+        #print(confusion_matrix(self.y_test,Y_rfc_pred))
 
     ## Branch Binned
     def run_step(self):
@@ -53,7 +53,7 @@ class Aml(batchstep.BatchStep):
         engine = create_engine("mysql+pymysql://" + self.cred_dict['username'] + ":" + self.cred_dict['password'] + "@" + "localhost" + "/" + "traice2")
         
         self.dataset = pickle.load(open(self.pickled_dir + '/aml.pkl', 'rb'))
-        print(self.dataset)
+        #print(self.dataset)
 
         self.dataset.drop('nameOrig', axis=1, inplace=True)
         self.dataset.drop('nameDest', axis=1, inplace=True)
