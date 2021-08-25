@@ -48,7 +48,7 @@ class Fit(batchstep.BatchStep):
 
         # produce isolation forest model and fit to dataframe
         #iforest = IsolationForest(n_estimators=1000, contamination=0.05)
-        print('populated columns',self.df_ia_agg_std.columns)
+        #print('populated columns',self.df_ia_agg_std.columns)
         iforest = IsolationForest(n_estimators=1000, contamination=0.05, random_state=123)
         iforest.fit(self.df_ia_agg_std)
 
@@ -62,7 +62,7 @@ class Fit(batchstep.BatchStep):
         # get custom score between 0 and 1 using scoring function
         self.df_ia_agg_scored['risk_score'] = self.score_fn(self.df_ia_agg_std, iforest)
 
-        print('populated columns score',self.df_ia_agg_scored['risk_score'])
+        #print('populated columns score',self.df_ia_agg_scored['risk_score'])
 
         # save isolation forest model
         #with open(f'iforest_{this_run_id}.p', 'wb') as f:
@@ -87,13 +87,13 @@ class Fit(batchstep.BatchStep):
 
         # fit explainer model (not currently used)
         feat_names = list(self.df_ia_agg.columns)
-        print("......outliers......",outliers)
+        #print("......outliers......",outliers)
         explainer = lime.lime_tabular.LimeTabularExplainer(self.df_ia_agg_std.values,
             feature_names=feat_names,
             class_names=['score'],
             verbose=True,
             mode='regression')
-        print("oveerrrrrrrr...................................................")
+        #print("oveerrrrrrrr...................................................")
         # example explainer instance
         #exp = explainer.explain_instance(self.df_ia_agg_scored.loc[outliers.sort_values('score',ascending=False).index[0],:'Clients_With_More_Than_One_KYC_Change'].values,iforest.decision_function,num_features=10)
 
@@ -119,7 +119,7 @@ class Fit(batchstep.BatchStep):
 
         #import pickle
 
-        print('df_ia_agg_scored is',self.df_ia_agg_scored)
+        #print('df_ia_agg_scored is',self.df_ia_agg_scored)
         #self.df_ia_agg_scored.to_excel(self.pickled_dir + '/df_ida_agg_scored.xlsx', index=False)
 
 
