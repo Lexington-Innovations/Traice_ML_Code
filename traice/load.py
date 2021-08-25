@@ -39,7 +39,7 @@ class Load(batchstep.BatchStep):
         super().__init__(input_files, pickled_dir, completion_file,cred_dict)
     
     def fetch_data(self,table_name):
-        print('burger',self.cred_dict)
+        #print('burger',self.cred_dict)
         # Connect to MariaDB Platform
         try:
             conn = mariadb.connect(
@@ -51,9 +51,9 @@ class Load(batchstep.BatchStep):
 
             )
         except mariadb.Error as e:
-            print(f"Error connecting to MariaDB Platform: {e}")
+            #print(f"Error connecting to MariaDB Platform: {e}")
             sys.exit(1)
-        print('connection done')
+        #print('connection done')
         # Get Cursor
         cur = conn.cursor()
         cur.execute('select * from %s;'%table_name)
@@ -75,10 +75,10 @@ class Load(batchstep.BatchStep):
         pickle_dict_out = {}
         tables = []
         tables_idx = {}
-        print(self.cred_dict)
+        #print(self.cred_dict)
         for file_name in input_files:
             df = self.fetch_data(file_name)
-            print(file_name,df)
+            #print(file_name,df)
             file_basename = file_name
             pickle_path = self.pickled_dir + '/' + TABLE_PICKLE_MAPPING[file_basename]
             pickle.dump(df, open(pickle_path, 'wb'))
