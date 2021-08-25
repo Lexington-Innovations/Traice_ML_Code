@@ -35,7 +35,7 @@ class BatchStep:
     def run(self):
 
         if self.check_completion_file_exists():
-            print('Skipping batch step', self.__class__.__name__, 
+            #print('Skipping batch step', self.__class__.__name__, 
                 'because completion file', self.completion_file,
                 'is already present. To enable execution of this step, delete this completion file.')
             return
@@ -43,7 +43,7 @@ class BatchStep:
         assert (self.check_inputs()), ('Error: some inputs to batch step ' + 
             self.__class__.__name__ + ' are missing.')
 
-        print('Running batch step:', self.__class__.__name__, '...')
+        #print('Running batch step:', self.__class__.__name__, '...')
 
         t_0 = time.time()
         self.run_step()
@@ -53,7 +53,7 @@ class BatchStep:
         with open(self.completion_file, 'a'):
             os.utime(self.completion_file, None)
 
-        print('Batch step', self.__class__.__name__, 'completed in', 
+        #print('Batch step', self.__class__.__name__, 'completed in', 
             round(t_1 - t_0, 3), 'seconds.')
     
     def run_step(self):
