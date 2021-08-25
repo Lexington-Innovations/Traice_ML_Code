@@ -76,7 +76,7 @@ class HitList(batchstep.BatchStep):
         random.seed(123)
 
         self.df_ia_agg_scored = pickle.load(open(self.pickled_dir + '/df_ia_agg_scored.pkl', 'rb'))
-        print('begin')
+        #print('begin')
         # DBG
         #with open('df_ia_agg_02.p','rb') as f:
         #    df_ia_agg_scored = pickle.load(f)
