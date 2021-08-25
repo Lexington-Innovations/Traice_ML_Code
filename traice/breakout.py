@@ -140,7 +140,7 @@ class BreakOut(batchstep.BatchStep):
         self.get_order_type_MARKET()
         self.get_order_type_LIMIT()
         self.get_order_type_STOP()
-        print('length trades',len(self.pro_trades),len(self.cancelled_trades),len(self.reversals),len(self.acct_kyc_12m),len(self.traded_under_other_ia))
+        #print('length trades',len(self.pro_trades),len(self.cancelled_trades),len(self.reversals),len(self.acct_kyc_12m),len(self.traded_under_other_ia))
 
         # acct_trades was changed by get_reversals() and get_kyc_changes() and needs to be saved again
         pickle.dump(self.acct_trades, open(self.pickled_dir + '/acct_trades.2.pkl', 'wb'))
