@@ -34,7 +34,7 @@ class Aggregate(batchstep.BatchStep):
         '''
         cols_to_keep = ['IA_NAME', 'TRD_TRADE_ID']
         trd_agg = df.groupby(['TRD_MONTH', 'IA_NAME'])['TRD_TRADE_ID'].count().reset_index()
-        print('Trade jan 17 Month',trd_agg['TRD_MONTH'])
+        #print('Trade jan 17 Month',trd_agg['TRD_MONTH'])
         trd_agg_tm = trd_agg[trd_agg['TRD_MONTH'] == '05/2021'].groupby('IA_NAME')['TRD_TRADE_ID'].sum().reset_index()[
             cols_to_keep]
         trd_agg_12m = (trd_agg.groupby('IA_NAME')['TRD_TRADE_ID'].median()).reset_index()[cols_to_keep]
@@ -42,16 +42,16 @@ class Aggregate(batchstep.BatchStep):
         return trd_agg_tm, trd_agg_12m
 
     def aggregate_by_ia(self, df, column):
-        print('tradeeeeeee yaaaaaaaaaaaaaaaaaayyyyyyyyyyyyy')
-        print(df.columns)
+        #print('tradeeeeeee yaaaaaaaaaaaaaaaaaayyyyyyyyyyyyy')
+        #print(df.columns)
         cols_to_keep = ['IA_NAME', column]
         trd_agg = df.groupby(['TRD_MONTH', 'IA_NAME'])[column].sum().reset_index()
-        print('Trade jan 17 Month',trd_agg[column])
+        #print('Trade jan 17 Month',trd_agg[column])
         trd_agg_tm = trd_agg[trd_agg['TRD_MONTH'] == '05/2021'].groupby('IA_NAME')[column].sum().reset_index()[
             cols_to_keep]
         trd_agg_12m = (trd_agg.groupby('IA_NAME')[column].median()).reset_index()[cols_to_keep]
-        print('okay we are returning',trd_agg_tm)
-        print('and this',trd_agg_12m)
+        #print('okay we are returning',trd_agg_tm)
+        #print('and this',trd_agg_12m)
         return trd_agg_tm, trd_agg_12m
 
     def complaints_by_ia(self, df):
@@ -150,29 +150,29 @@ class Aggregate(batchstep.BatchStep):
         if 'Flagged' in new_col_name or new_col_name == 'Commission':
             
             agg_tm, agg_12m = self.agg_by_ia_sum(df_to_agg, sum_col)
-            print('flagged and comission',agg_tm,agg_12m)
+            #print('flagged and comission',agg_tm,agg_12m)
             branch_agg_tm, branch_agg_12m = self.agg_by_other_sum(df_to_agg, col_to_agg_by='WM_PHYSICAL_BRANCH_ID',
                 sum_col=sum_col)
             region_agg_tm, region_agg_12m = self.agg_by_other_sum(df_to_agg, col_to_agg_by='WM_PHY_BRANCH_REGION',
                 sum_col=sum_col)
             col_to_retrieve = sum_col
         else:
-            print('new column name issss',new_col_name)
+            #print('new column name issss',new_col_name)
             if new_col_name == 'Complaints':
                 agg_tm, agg_12m = self.complaints_by_ia(df_to_agg)
             
 
             else:
                 agg_tm, agg_12m = self.agg_by_ia(df_to_agg)
-                print('others agg-tm',agg_tm)
-                print('other agg_12m',agg_12m)
+                #print('others agg-tm',agg_tm)
+                #print('other agg_12m',agg_12m)
             branch_agg_tm, branch_agg_12m = self.agg_by_other(df_to_agg, col_to_agg_by='WM_PHYSICAL_BRANCH_ID')
             region_agg_tm, region_agg_12m = self.agg_by_other(df_to_agg, col_to_agg_by='WM_PHY_BRANCH_REGION')
             col_to_retrieve = 'TRD_TRADE_ID'
-        print('complaints hoh ho',agg_12m)
+        #print('complaints hoh ho',agg_12m)
         df_agg_cur = self.merge_by_ia(df_ia_agg, agg_tm, col_tm, col_to_retrieve)
         df_agg_cur = self.merge_by_ia(df_agg_cur, agg_12m, col_12m, col_to_retrieve)
-        print('returning this',df_agg_cur)
+        #print('returning this',df_agg_cur)
 
         '''
         # region and branch related - excluded for now
@@ -217,19 +217,19 @@ class Aggregate(batchstep.BatchStep):
         col_branch_12m = col_12m + '_BRANCH'
         col_region_tm = col_tm + '_REGION'
         col_region_12m = col_12m + '_REGION'
-        print('barney columns',new_col_name)
+        #print('barney columns',new_col_name)
         if new_col_name == 'AMOUNT':
-            print('yes it is')
+            #print('yes it is')
             agg_tm, agg_12m = self.aggregate_by_ia(df_to_agg,'AMOUNT')
             col_to_retrieve = 'AMOUNT'
         elif new_col_name == 'TRD_COMMISSION':
-            print('yes it is')
+            #print('yes it is')
             agg_tm, agg_12m = self.aggregate_by_ia(df_to_agg,'TRD_COMMISSION')
             col_to_retrieve = 'TRD_COMMISSION'
         
         df_agg_cur = self.merge_by_ia2(df_ia_agg, agg_tm, col_tm, col_to_retrieve)
         df_agg_cur = self.merge_by_ia2(df_agg_cur, agg_12m, col_12m, col_to_retrieve)
-        print('before retrning',agg_12m)
+        #print('before retrning',agg_12m)
         return df_agg_cur
 
     def run_step(self):
@@ -266,15 +266,15 @@ class Aggregate(batchstep.BatchStep):
         # self.df_ia_agg = create_merged_cols(self.df_ia_agg,flagged_trades,'Flagged_Trades')
 
         # add number of pro trades
-        print('prooooooooo tradeeees',self.pro_trades)
+        #print('prooooooooo tradeeees',self.pro_trades)
         self.df_ia_agg = self.create_merged_cols(self.df_ia_agg, self.pro_trades, new_col_name='Pro_Trades')
         
         # add number of cancelled trades
-        print('cancelled trade',self.cancelled_trades)
+        #print('cancelled trade',self.cancelled_trades)
         self.df_ia_agg = self.create_merged_cols(self.df_ia_agg, self.cancelled_trades, new_col_name='Cancelled_Trades')
 
         # add number of complaints
-        print('complaintsssssssss',self.complaints)
+        #print('complaintsssssssss',self.complaints)
         self.df_ia_agg = self.create_merged_cols(self.df_ia_agg, self.complaints, new_col_name='Complaints')
 
         # add commission amounts
@@ -287,7 +287,7 @@ class Aggregate(batchstep.BatchStep):
 
         self.df_ia_agg = self.create_merged_cols(self.df_ia_agg, self.order_type_MARKET, 
             new_col_name='Order_type_MARKET_count_under_IA')
-        print('order type count',self.df_ia_agg)
+        #print('order type count',self.df_ia_agg)
 
         self.df_ia_agg = self.create_merged_cols(self.df_ia_agg, self.order_type_LIMIT, 
     new_col_name='Order_type_LIMIT_count_under_IA')
@@ -305,7 +305,7 @@ class Aggregate(batchstep.BatchStep):
         self.df_ia_agg = self.create_merged_cols2(self.df_ia_agg, self.acct_trades, 
     new_col_name='TRD_COMMISSION')
 
-        print(self.df_ia_agg[['AMOUNT_TM','AMOUNT_12M']])
+        #print(self.df_ia_agg[['AMOUNT_TM','AMOUNT_12M']])
 
         # cleanup and standardization (convert values to mean 0, std 1)
         self.df_ia_agg.index = self.df_ia_agg['IA_NAME']
